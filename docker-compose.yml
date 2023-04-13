@@ -190,7 +190,6 @@ qbittorrent:
       - 3000:3000
     restart: unless-stopped
 
-    services:
     jellyseerr:
        image: fallenbagel/jellyseerr:latest
        container_name: jellyseerr
