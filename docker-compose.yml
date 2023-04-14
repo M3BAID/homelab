@@ -146,6 +146,18 @@ qbittorrent:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
+    
+    jellyseerr:
+       image: fallenbagel/jellyseerr:latest
+       container_name: jellyseerr
+       environment:
+            - LOG_LEVEL=debug
+            - TZ=Asia/Tashkent
+       ports:
+            - 5055:5055
+       volumes:
+            - /path/to/appdata/config:/app/config
+       restart: unless-stopped
 
 ## System Monitoring
 
@@ -189,15 +201,18 @@ qbittorrent:
     ports:
       - 3000:3000
     restart: unless-stopped
-
-    jellyseerr:
-       image: fallenbagel/jellyseerr:latest
-       container_name: jellyseerr
-       environment:
-            - LOG_LEVEL=debug
-            - TZ=Asia/Tashkent
-       ports:
-            - 5055:5055
-       volumes:
-            - /path/to/appdata/config:/app/config
-       restart: unless-stopped
+       
+        guacamole:
+    image: flcontainers/guacamole
+    container_name: guacamole
+    environment:
+      TZ: 'UTC'
+      EXTENSIONS: 'auth-totp,auth-ldap'
+    volumes:
+      - postgres:/config
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8080:8080
+volumes:
+  postgres:
+    driver: local
