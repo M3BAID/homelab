@@ -216,3 +216,15 @@ qbittorrent:
 volumes:
   postgres:
     driver: local
+    
+    ## Cloudflare-DDNS
+    
+      cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    environment:
+      - API_KEY=xxxxxxx
+      - ZONE=example.com
+      - PROXIED=true
+      - PUID=998
+      - PGID=100
