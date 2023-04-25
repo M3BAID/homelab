@@ -70,8 +70,9 @@ qbittorrent:
       - TZ=Etc/UTC
       - WEBUI_PORT=8080
     volumes:
-      - /path/to/appdata/config:/config
-      - /path/to/downloads:/downloads
+      - /media/conf:conf
+      - /media:/media
+      - /media:/temp
     ports:
       - 8080:8080
       - 6881:6881
@@ -106,9 +107,11 @@ qbittorrent:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /path/to/bazarr/config:/config
-      - /path/to/movies:/movies #optional
-      - /path/to/tv:/tv #optional
+      - /media/conf:conf
+      - /media:/Airing
+      - /media:/Finished Airing
+      - /media:/Movies
+      - /media:/TV Shows
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -138,9 +141,11 @@ qbittorrent:
       - TZ=America/Denver
       - UMASK_SET=022
     volumes:
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Sonarr:/config
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/TV:/tv
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Torrents:/downloads
+      - /media/conf:conf
+      - /media:/Airing
+      - /media:/Finished Airing
+      - /media:/Movies
+      - /media:/TV Shows
     ports:
       - 8989:8989
     restart: unless-stopped
