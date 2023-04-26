@@ -17,7 +17,7 @@ services:
       - /homelab/media/Finished Airing:/FinishedAiring
       - /homelab/media/TV Shows:/TV Shows
       - /homelab/media/movies:/movies
-    ports:
+      ports:
       - 8096:8096
     restart: unless-stopped
     
@@ -28,7 +28,7 @@ services:
             - LOG_LEVEL=debug
             - TZ=Asia/Tashkent
       ports:
-            - 5055:5055
+      - 5055:5055
       volumes:
       - /homelab/conf/jellyseerr:/app/config
       - /homelab/media:/media
