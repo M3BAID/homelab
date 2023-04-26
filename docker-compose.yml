@@ -2,85 +2,77 @@
 version: "2"
 services:
 
-      jellyfin:
+  jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
+      - JELLYFIN_PublishedServerUrl=jellyfin.example.com
     volumes:
-      - /media:/config
+      - /mnt/conf/jellyfin:/config
+      - /mnt/media:/media
     ports:
       - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
+
     restart: unless-stopped
     
     jellyseerr:
-       image: fallenbagel/jellyseerr:latest
-       container_name: jellyseerr
-       environment:
+      image: fallenbagel/jellyseerr:latest
+      container_name: jellyseerr
+      environment:
             - LOG_LEVEL=debug
             - TZ=Asia/Tashkent
-       ports:
+      ports:
             - 5055:5055
-       volumes:
-            - /path/to/appdata/config:/app/config
-       restart: unless-stopped
+      volumes:
+            - /mnt/conf/jellyseerr:/app/config
+      restart: unless-stopped
 
   jackett:
-    image: linuxserver/jackett
+    image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
     environment:
-      - PUID=998
-      - PGID=100
-      - TZ=America/Denver
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
     volumes:
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Jackett:/config
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Torrents:/downloads
+      - /mnt/conf/jackett:/config
+      - /meida:/media
     ports:
       - 9117:9117
     restart: unless-stopped
     
   organizr:
+    image: linuxserver/organizr
     container_name: organizr
-    hostname: organizr
-    image: organizr/organizr
-    restart: unless-stopped
-    ports:
-        - 90:80
-    volumes:
-        - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Organizr:/config
     environment:
-        - fpm=true #true or false | using true will provide better performance
-        - branch=v2-master #v2-master or #v2-develop
-        - PUID=998
-        - PGID=100
-        - TZ=America/Denver
-  
-qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
+      - PUID=1000
+      - PGID=1000
+      - TZ=<your timezone, eg Europe/London>
+    volumes:
+      - /mnt/conf/organizr:/config
+    ports:
+      - 9983:80
+    restart: unless-stopped
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - WEBUI_PORT=8080
+      - USER= #usrname
+      - PASS= #password
     volumes:
-      - /media/conf:conf
+      - /mnt/conf/transmission:/config
       - /media:/media
-      - /media:/temp
     ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
-    volumes:
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/QBittorrentVPN:/config
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Torrents:/downloads
-      - /etc/timezone:/etc/timezone:ro #This is for TimeZone
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
     restart: unless-stopped
 
   radarr:
