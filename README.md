@@ -1,2 +1,2 @@
 # media-server
-docker media server
+homelab self-hosted services
