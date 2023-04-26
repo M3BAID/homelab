@@ -56,7 +56,24 @@ services:
     ports:
       - 9983:80
     restart: unless-stopped
-
+  
+    qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+    volumes:
+      - /mnt/conf/qbittorrent:/config
+      - /mnt/media:/media
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    
   transmission:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
@@ -68,7 +85,7 @@ services:
       - PASS= #password
     volumes:
       - /mnt/conf/transmission:/config
-      - /media:/media
+      - /mnt/media:/media
     ports:
       - 9091:9091
       - 51413:51413
