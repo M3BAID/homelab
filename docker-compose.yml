@@ -196,17 +196,3 @@ services:
       ports:
       - 4545:4545
       restart: unless-stopped
-
-## System Monitoring
-
-
-    ## Cloudflare-DDNS
-    
-      cloudflare-ddns:
-    image: oznu/cloudflare-ddns:latest
-    environment:
-      - API_KEY=xxxxxxx
-      - ZONE=example.com
-      - PROXIED=true
-      - PUID=998
-      - PGID=100
