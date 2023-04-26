@@ -78,7 +78,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - WEBUI_PORT=8080
+      - WEBUI_PORT=10095
     volumes:
       - /homelab/conf/qbittorrent:/config
       - /homelab/media:/media
@@ -87,7 +87,7 @@ services:
       - /homelab/media/TV Shows:/TV Shows
       - /homelab/media/movies:/movies
     ports:
-      - 8080:8080
+      - 10095:8080
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
@@ -211,7 +211,7 @@ services:
         - TZ=Etc/UTC
         - UMASK_SET=022
       volumes:
-        - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /homelab/conf/prometheus:/config
       ports:
         - 9292:9090
       restart: unless-stopped
