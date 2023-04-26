@@ -11,8 +11,13 @@ services:
       - TZ=Etc/UTC
       - JELLYFIN_PublishedServerUrl=jellyfin.example.com
     volumes:
-      - /mnt/conf/jellyfin:/config
-      - /mnt/media:/media
+      - /homelab/conf/jellyfin:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
+
     ports:
       - 8096:8096
 
@@ -27,7 +32,12 @@ services:
       ports:
             - 5055:5055
       volumes:
-            - /mnt/conf/jellyseerr:/app/config
+      - /homelab/conf/jellyseerr:/app/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
       restart: unless-stopped
 
   jackett:
@@ -38,9 +48,13 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /mnt/conf/jackett:/config
-      - /meida:/media
-    ports:
+      - /homelab/conf/jackett:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
+      ports:
       - 9117:9117
     restart: unless-stopped
     
@@ -50,9 +64,9 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=<your timezone, eg Europe/London>
+      - TZ=Etc/UTC
     volumes:
-      - /mnt/conf/organizr:/config
+      - /homelab/conf/organizr:/config
     ports:
       - 9983:80
     restart: unless-stopped
@@ -66,8 +80,12 @@ services:
       - TZ=Etc/UTC
       - WEBUI_PORT=8080
     volumes:
-      - /mnt/conf/qbittorrent:/config
-      - /mnt/media:/media
+      - /homelab/conf/qbittorrent:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
     ports:
       - 8080:8080
       - 6881:6881
@@ -81,11 +99,13 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - USER= #usrname
-      - PASS= #password
     volumes:
-      - /mnt/conf/transmission:/config
-      - /mnt/media:/media
+      - /homelab/conf/transmission:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
     ports:
       - 9091:9091
       - 51413:51413
@@ -101,9 +121,12 @@ services:
       - TZ=America/Denver
       - UMASK_SET=022 #optional
     volumes:
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Radarr:/config
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Movies:/movies
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Torrents:/downloads
+      - /homelab/conf/radarr:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -116,11 +139,12 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - /media/conf:conf
-      - /media:/Airing
-      - /media:/Finished Airing
-      - /media:/Movies
-      - /media:/TV Shows
+      - /homelab/conf/bazarr:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -133,9 +157,12 @@ services:
       - PGID=100
       - TZ=America/Denver
     volumes:
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Sabnzbd:/config
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Downloads:/downloads
-      - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Downloads/Incomplete:/incomplete-downloads #optional
+      - /homelab/conf/sabnzbd:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
     ports:
       - 8181:8080
       - 9191:9090
@@ -150,24 +177,25 @@ services:
       - TZ=America/Denver
       - UMASK_SET=022
     volumes:
-      - /media/conf:conf
-      - /media:/Airing
-      - /media:/Finished Airing
-      - /media:/Movies
-      - /media:/TV Shows
+      - /homelab/conf/sonarr:/config
+      - /homelab/media:/media
+      - /homelab/media/Airing:/Airing
+      - /homelab/media/Finished Airing:/FinishedAiring
+      - /homelab/media/TV Shows:/TV Shows
+      - /homelab/media/movies:/movies
     ports:
       - 8989:8989
     restart: unless-stopped
 
-      requestrr:
+  requestrr:
     image: lscr.io/linuxserver/requestrr:latest
     container_name: requestrr
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=Etc/UTC
     volumes:
-      - /path/to/appdata/config:/config
+      - /homelab/conf/requestrr:/config
     ports:
       - 4545:4545
     restart: unless-stopped
@@ -180,7 +208,7 @@ services:
       environment:
         - PUID=998
         - PGID=100
-        - TZ=America/Denver
+        - TZ=Etc/UTC
         - UMASK_SET=022
       volumes:
         - /srv/dev-disk-by-uuid-0d4a201c-b292-412d-ade6-cc5561e54f1f/Configs/Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -195,7 +223,7 @@ services:
       environment:
         - PUID=998
         - PGID=100
-        - TZ=America/Denver
+        - TZ=Etc/UTC
         - UMASK_SET=022
       volumes:
         - /:/host:ro,rslave
@@ -209,21 +237,20 @@ services:
     environment:
       - PUID=998
       - PGID=100
-      - TZ=America/Denver
+      - TZ=Etc/UTC
       - UMASK_SET=022
     ports:
       - 3000:3000
     restart: unless-stopped
        
-        guacamole:
+  guacamole:
     image: flcontainers/guacamole
     container_name: guacamole
     environment:
-      TZ: 'UTC'
+      - TZ=Etc/UTC
       EXTENSIONS: 'auth-totp,auth-ldap'
     volumes:
       - postgres:/config
-      - /etc/localtime:/etc/localtime:ro
     ports:
       - 8080:8080
 volumes:
