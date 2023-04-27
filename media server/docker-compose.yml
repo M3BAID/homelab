@@ -19,7 +19,7 @@ services:
       - /homelab/media/movies:/movies
       ports:
       - 8096:8096
-    restart: unless-stopped
+      restart: unless-stopped
     
     jellyseerr:
       image: fallenbagel/jellyseerr:latest
@@ -60,9 +60,9 @@ services:
       image: linuxserver/organizr
       container_name: organizr
       environment:
-        - PUID=1000
-        - PGID=1000
-        - TZ=Etc/UTC
+          - PUID=1000
+          - PGID=1000
+          - TZ=Etc/UTC
       volumes:
         - /homelab/conf/organizr:/config
       ports:
@@ -169,10 +169,10 @@ services:
       image: linuxserver/sonarr
       container_name: sonarr
       environment:
-        - PUID=998
-        - PGID=100
-        - TZ=America/Denver
-        - UMASK_SET=022
+      - PUID=998
+      - PGID=100
+      - TZ=America/Denver
+      - UMASK_SET=022
       volumes:
       - /homelab/conf/sonarr:/config
       - /homelab/media:/media
