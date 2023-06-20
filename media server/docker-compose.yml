@@ -158,11 +158,14 @@ services:
       ports:
       - 5055:5055
       volumes:
-      - /homelab/conf/jellyseerr:/app/config
-      - /homelab/media:/media
-      - /homelab/media/Airing:/Airing
-      - /homelab/media/Finished Airing:/FinishedAiring
-      - /homelab/media/TV Shows:/TV Shows
-      - /homelab/media/movies:/movies
+      - /media-server/conf/jellyseerr:/app/config
+      - /media-server/media:/media
+      - /media-server/media/Airing:/Airing
+      - /media-server/media/FinishedAiring:/FinishedAiring
+      - /media-server/media/TV Shows:/TV Shows
+      - /media-server/media/movies:/movies
+      - /media-server/guest/movies:/guest movies      
+      - /media-server/guest/Anime:/guest Anime
+      - /media-server/guest/shows:/guest shows
       restart: unless-stopped
 
