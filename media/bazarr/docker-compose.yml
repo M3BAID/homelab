@@ -1,0 +1,15 @@
+version: "2"
+services:
+    bazarr:
+      image: lscr.io/linuxserver/bazarr:latest
+      container_name: bazarr
+      environment:
+      - PUID=env/PUID
+      - PGID=env/PGID
+      - TZ=env/TZ
+      volumes:
+      - env/path/conf/bazarr:/config
+      - env/path/media:/media
+      ports:
+      - 6767:6767
+      restart: unless-stopped

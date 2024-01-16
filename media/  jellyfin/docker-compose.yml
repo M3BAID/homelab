@@ -1,0 +1,20 @@
+version: "2"
+services:
+    jellyfin:
+      image: lscr.io/linuxserver/jellyfin:latest
+      container_name: jellyfin
+      environment:
+      - PUID=env/PUID
+      - PGID=env/PGID
+      - TZ=env/TZ
+      - JELLYFIN_PublishedServerUrl=jellyfin.example.com
+      #For Nvidia GPU
+      - NVIDIA_VISIBLE_DEVICES=all
+      volumes:
+      - env/pathconf/jellyfin:/config
+      - env/pathmedia:/media
+      ports:
+      - 8096:8096
+      #For Nvidia GPU
+      runtime: nvidia
+      restart: unless-stopped

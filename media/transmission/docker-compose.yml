@@ -1,0 +1,17 @@
+version: "2"
+services:
+    transmission:
+      image: lscr.io/linuxserver/transmission:latest
+      container_name: transmission
+      environment:
+      - PUID=env/PUID
+      - PGID=env/PGID
+      - TZ=env/TZ
+      volumes:
+      - enc/path/conf/transmission:/config
+      - enc/path/media:/media
+      ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+      restart: unless-stopped

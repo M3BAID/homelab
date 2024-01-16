@@ -1,0 +1,33 @@
+services:
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+    environment:
+      - TZ=env/tz
+      - PUID=env/PUID
+      - PGID=env/PGID
+      - UMASK_SET=002
+      - serverIP=env/serverIP
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - inContainer=true
+      - nodeName=MainNode
+      # For NVIDIA_GraphicsCards
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - env/path/tdarr/server:/app/server
+      - env/path/tdarr/configs:/app/configs
+      - env/path/tdarr/logs:/app/logs
+      - env/path/media:/media
+      - env/path/tdarr/transcode_cache:/temp
+    # For NVIDIA_GraphicsCards
+    runtime: nvidia
+
+

@@ -1,0 +1,15 @@
+version: "2"
+services:
+    radarr:
+      image: linuxserver/radarr
+      container_name: radarr
+      environment:
+      - PUID=env/PUID
+      - PGID=env
+      - TZ=env/TZ
+      volumes:
+      - env/path/conf/radarr:/config
+      - env/path/media:/media
+      ports:
+      - 7878:7878
+      restart: unless-stopped
