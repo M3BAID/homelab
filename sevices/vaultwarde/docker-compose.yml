@@ -4,7 +4,7 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     volumes:
-    - /home/usr/docker/vaultwarden:/data
+    - env/path/vaultwarden:/data
     ports:
     - 85:80
     restart: unless-stopped

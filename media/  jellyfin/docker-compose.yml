@@ -11,8 +11,8 @@ services:
       #For Nvidia GPU
       - NVIDIA_VISIBLE_DEVICES=all
       volumes:
-      - env/pathconf/jellyfin:/config
-      - env/pathmedia:/media
+      - env/path/conf/jellyfin:/config
+      - env/path/media:/media
       ports:
       - 8096:8096
       #For Nvidia GPU

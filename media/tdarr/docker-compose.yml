@@ -22,11 +22,11 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
       - NVIDIA_VISIBLE_DEVICES=all
     volumes:
-      - env/path/tdarr/server:/app/server
-      - env/path/tdarr/configs:/app/configs
-      - env/path/tdarr/logs:/app/logs
+      - env/path/conf/tdarr/server:/app/server
+      - env/path/conf/tdarr/configs:/app/configs
+      - env/path/conf/tdarr/logs:/app/logs
       - env/path/media:/media
-      - env/path/tdarr/transcode_cache:/temp
+      - env/path/conf/tdarr/transcode_cache:/temp
     # For NVIDIA_GraphicsCards
     runtime: nvidia
 
