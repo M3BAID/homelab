@@ -4,13 +4,13 @@ services:
       image: linuxserver/sonarr:develop
       container_name: sonarr
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       - UMASK_SET=022
       volumes:
-      - env/path/conf/sonarr:/config
-      - env/path/media:/media
+      - $conf/sonarr:/config
+      - $media:/media
       ports:
       - 8989:8989
       restart: unless-stopped

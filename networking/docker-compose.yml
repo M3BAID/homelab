@@ -1,40 +1,38 @@
 version: "3"
+
 services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
     ports:
-    - "53:53/tcp"
-    - "53:53/udp"
-    - "8080:80/tcp"
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"
     environment:
-    TZ:
-    - 'env/TZ'
-    WEBPASSWORD:
-    - 'env/passwd'
+      TZ: '$TZ'
+      WEBPASSWORD: '$WEBPASSWORD'
     volumes:
-    - './etc-pihole:/etc/pihole'
-    - './etc-dnsmasq.d:/etc/dnsmasq.d'
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
     restart: unless-stopped
 
   cloudflare-ddns:
     image: oznu/cloudflare-ddns
     restart: always
     environment:
-    - API_KEY=env/API_KEY
-    - ZONE=env/domain.com
-    - PROXIED=true
-    - PUID=env/PUID
-    - PGID=env/PGID
+      - API_KEY=$API_KEY
+      - ZONE=$ZONE
+      - PROXIED=true
+      - PUID=$PUID
+      - PGID=$PGID
 
-  
   nginx:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
-    - '80:80'
-    - '81:81'
-    - '443:443'
+      - '80:80'
+      - '81:81'
+      - '443:443'
     volumes:
-    - ./data:/data
-    - ./letsencrypt:/etc/letsencrypt
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt

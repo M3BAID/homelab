@@ -4,12 +4,12 @@ services:
       image: lscr.io/linuxserver/bazarr:latest
       container_name: bazarr
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       volumes:
-      - env/path/conf/bazarr:/config
-      - env/path/media:/media
+      - $conf/bazarr:/config
+      - $media:/media
       ports:
       - 6767:6767
       restart: unless-stopped

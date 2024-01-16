@@ -4,12 +4,12 @@ services:
       image: fallenbagel/jellyseerr:latest
       container_name: jellyseerr
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
+      - PUID=$PUID
+      - PGID=$PGID
       - LOG_LEVEL=debug
-      - TZ=env/TZ
+      - TZ=$TZ
       volumes:
-      - env/path/conf/jellyseer:/app/config
+      - $conf/jellyseer:/app/config
       ports:
       - 5055:5055
       restart: unless-stopped

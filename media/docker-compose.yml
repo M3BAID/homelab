@@ -4,15 +4,15 @@ services:
       image: lscr.io/linuxserver/jellyfin:latest
       container_name: jellyfin
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       - JELLYFIN_PublishedServerUrl=jellyfin.example.com
       #For Nvidia GPU
       - NVIDIA_VISIBLE_DEVICES=all
       volumes:
-      - env/path/conf/jellyfin:/config
-      - env/path/media:/media
+      - $conf/jellyfin:/config
+      - $media:/media
       ports:
       - 8096:8096
       #For Nvidia GPU
@@ -23,12 +23,12 @@ services:
       image: fallenbagel/jellyseerr:latest
       container_name: jellyseerr
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
+      - PUID=$PUID
+      - PGID=$PGID
       - LOG_LEVEL=debug
-      - TZ=env/TZ
+      - TZ=$TZ
       volumes:
-      - env/path/conf/jellyseer:/app/config
+      - $conf/jellyseer:/app/config
       ports:
       - 5055:5055
       restart: unless-stopped
@@ -37,13 +37,13 @@ services:
       image: linuxserver/sonarr:develop
       container_name: sonarr
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       - UMASK_SET=022
       volumes:
-      - env/path/conf/sonarr:/config
-      - env/path/media:/media
+      - $conf/sonarr:/config
+      - $media:/media
       ports:
       - 8989:8989
       restart: unless-stopped
@@ -52,12 +52,12 @@ services:
       image: linuxserver/radarr
       container_name: radarr
       environment:
-      - PUID=env/PUID
+      - PUID=$PUID
       - PGID=env
-      - TZ=env/TZ
+      - TZ=$TZ
       volumes:
-      - env/path/conf/radarr:/config
-      - env/path/media:/media
+      - $conf/radarr:/config
+      - $media:/media
       ports:
       - 7878:7878
       restart: unless-stopped
@@ -66,25 +66,25 @@ services:
       container_name: prowlarr
       image: lscr.io/linuxserver/prowlarr:latest
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       ports:
       - 9696:9696
       volumes:
-      - env/path/conf/prowlarr:/app/config
+      - $conf/prowlarr:/app/config
       restart: unless-stopped
 
     bazarr:
       image: lscr.io/linuxserver/bazarr:latest
       container_name: bazarr
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       volumes:
-      - env/path/conf/bazarr:/config
-      - env/path/media:/media
+      - $conf/bazarr:/config
+      - $media:/media
       ports:
       - 6767:6767
       restart: unless-stopped
@@ -93,12 +93,12 @@ services:
       image: lscr.io/linuxserver/transmission:latest
       container_name: transmission
       environment:
-      - PUID=env/PUID
-      - PGID=env/PGID
-      - TZ=env/TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
       volumes:
-      - enc/path/conf/transmission:/config
-      - enc/path/media:/media
+      - $conf/transmission:/config
+      - $media:/media
       ports:
       - 9091:9091
       - 51413:51413
@@ -114,9 +114,9 @@ services:
       - 8265:8265 # webUI port
       - 8266:8266 # server port
       environment:
-      - TZ=env/tz
-      - PUID=env/PUID
-      - PGID=env/PGID
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
       - UMASK_SET=002
       - serverIP=env/serverIP
       - serverPort=8266
@@ -128,10 +128,10 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
       - NVIDIA_VISIBLE_DEVICES=all
       volumes:
-      - env/path/conf/tdarr/server:/app/server
-      - env/path/conf/tdarr/configs:/app/configs
-      - env/path/conf/tdarr/logs:/app/logs
-      - env/path/media:/media
-      - env/path/conf/tdarr/transcode_cache:/temp
+      - $conf/tdarr/server:/app/server
+      - $conf/tdarr/configs:/app/configs
+      - $conf/tdarr/logs:/app/logs
+      - $media:/media
+      - $conf/tdarr/transcode_cache:/temp
       # For NVIDIA_GraphicsCards
       runtime: nvidia

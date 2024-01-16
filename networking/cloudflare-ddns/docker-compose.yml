@@ -4,8 +4,8 @@ services:
     image: oznu/cloudflare-ddns
     restart: always
     environment:
-      - API_KEY=env/API_KEY
-      - ZONE=env/domain.com
+      - API_KEY=$API_KEY
+      - ZONE=$ZONE
       - PROXIED=true
-      - PUID=env/PUID
-      - PGID=env/PGID
+      - PUID=$PUID
+      - PGID=$PGID

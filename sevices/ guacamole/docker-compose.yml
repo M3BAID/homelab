@@ -4,7 +4,7 @@ services:
     image: oznu/guacamole
     container_name: guacamole
     volumes:
-      - env/path/guacamole:/config
+      - $path/guacamole:/config
     ports:
       - 8182:8080
 volumes:

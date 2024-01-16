@@ -4,8 +4,8 @@ services:
         container_name: homarr
         image: ghcr.io/ajnart/homarr:latest
         volumes:
-            - 'env/path/homarr/configs:/app/data/configs'
-            - 'env/path/homarr/icons:/app/public/icons'
+            - '$path/homarr/configs:/app/data/configs'
+            - '$path/homarr/icons:/app/public/icons'
         ports:
             - '7575:7575'
         restart: unless-stopped

@@ -9,8 +9,8 @@ services:
       - "53:53/udp"
       - "8080:80/tcp"
     environment:
-      TZ: 'env/TZ'
-      # WEBPASSWORD: 'env/passwd'
+      TZ: '$TZ'
+      WEBPASSWORD: '$WEBPASSWORD'
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
