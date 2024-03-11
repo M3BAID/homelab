@@ -11,8 +11,8 @@ services:
       #For Nvidia GPU
       - NVIDIA_VISIBLE_DEVICES=all
       volumes:
-      - jellyfin:/config
-      - $media:/media
+      - $path/jellyfin:/config
+      #- $media:/media
       ports:
       - 8096:8096
       #For Nvidia GPU
@@ -28,7 +28,7 @@ services:
       - LOG_LEVEL=debug
       - TZ=$TZ
       volumes:
-      - jellyseer:/app/config
+      - $path/jellyseer:/app/config
       ports:
       - 5055:5055
       restart: unless-stopped
@@ -42,8 +42,8 @@ services:
       - TZ=$TZ
       - UMASK_SET=022
       volumes:
-      - sonarr:/config
-      - $media:/media
+      - $path/sonarr:/config
+      #- $media:/media
       ports:
       - 8989:8989
       restart: unless-stopped
@@ -56,8 +56,8 @@ services:
       - PGID=env
       - TZ=$TZ
       volumes:
-      - radarr:/config
-      - $media:/media
+      - $path/radarr:/config
+      #- $media:/media
       ports:
       - 7878:7878
       restart: unless-stopped
@@ -72,7 +72,7 @@ services:
       ports:
       - 9696:9696
       volumes:
-      - prowlarr:/app/config
+      - $path/prowlarr:/app/config
       restart: unless-stopped
 
     bazarr:
@@ -83,8 +83,8 @@ services:
       - PGID=$PGID
       - TZ=$TZ
       volumes:
-      - bazarr:/config
-      - $media:/media
+      - $path/bazarr:/config
+      #- $media:/media
       ports:
       - 6767:6767
       restart: unless-stopped
@@ -97,10 +97,10 @@ services:
       - PGID=$PGID
       - TZ=$TZ
       volumes:
-      - transmission:/config
-      - $media:/media
+      - $path/transmission:/config
+      #- $media:/media
       ports:
-      - 9091:9091
+      - 9091:9091media-server
       - 51413:51413
       - 51413:51413/udp
       restart: unless-stopped
@@ -118,7 +118,7 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - UMASK_SET=002
-      - serverIP=env/serverIP
+      - serverIP=$serverIP
       - serverPort=8266
       - webUIPort=8265
       - internalNode=true
@@ -128,20 +128,11 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
       - NVIDIA_VISIBLE_DEVICES=all
       volumes:
-      - tdarr/server:/app/server
-      - tdarr/configs:/app/configs
-      - tdarr/logs:/app/logs
-      - $media:/media
-      - tdarr/transcode_cache:/temp
+      - $path/tdarr/server:/app/server
+      - $path/tdarr/configs:/app/configs
+      - $path/tdarr/logs:/app/logs
+      - $path/tdarr/transcode_cache:/temp
+      #- $media:/media
       # For NVIDIA_GraphicsCards
       runtime: nvidia
-
-volumes:
-    sonarr:
-    radarr:
-    bazarr:
-    jellyfin:
-    jellyseer:
-    transmission:
-    prowlarr:
-    tdarr:
+      
