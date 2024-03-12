@@ -12,11 +12,11 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       volumes:
       - $path/jellyfin:/config
-      #- $media:/media
+      - $media:/media
       ports:
       - 8096:8096
       #For Nvidia GPU
-      runtime: nvidia
+      #runtime: nvidia
       restart: unless-stopped
 
     jellyseerr:
@@ -43,7 +43,7 @@ services:
       - UMASK_SET=022
       volumes:
       - $path/sonarr:/config
-      #- $media:/media
+      - $media:/media
       ports:
       - 8989:8989
       restart: unless-stopped
@@ -57,7 +57,7 @@ services:
       - TZ=$TZ
       volumes:
       - $path/radarr:/config
-      #- $media:/media
+      - $media:/media
       ports:
       - 7878:7878
       restart: unless-stopped
@@ -84,7 +84,7 @@ services:
       - TZ=$TZ
       volumes:
       - $path/bazarr:/config
-      #- $media:/media
+      - $media:/media
       ports:
       - 6767:6767
       restart: unless-stopped
@@ -98,7 +98,7 @@ services:
       - TZ=$TZ
       volumes:
       - $path/transmission:/config
-      #- $media:/media
+      - $media:/media
       ports:
       - 9091:9091
       - 51413:51413
@@ -132,7 +132,7 @@ services:
       - $path/tdarr/configs:/app/configs
       - $path/tdarr/logs:/app/logs
       - $path/tdarr/transcode_cache:/temp
-      #- $media:/media
+      - $media:/media
       # For NVIDIA_GraphicsCards
-      runtime: nvidia
+      #runtime: nvidia
       
