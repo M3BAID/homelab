@@ -9,10 +9,15 @@ services:
       - TZ=$TZ
       - JELLYFIN_PublishedServerUrl=jellyfin.example.com
       #For Nvidia GPU
-      - NVIDIA_VISIBLE_DEVICES=all
+      #- NVIDIA_VISIBLE_DEVICES=all
+      #Fot Intel
+      - linuxserver/mods:jellyfin-opencl-intel
       volumes:
       - $path/jellyfin:/config
       - $media:/media
+      #For Intel
+      devices:
+      - /dev/dri:/dev/dri
       ports:
       - 8096:8096
       #For Nvidia GPU
