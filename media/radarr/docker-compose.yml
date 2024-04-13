@@ -1,15 +1,33 @@
-version: "2"
 services:
     radarr:
       image: linuxserver/radarr
       container_name: radarr
       environment:
       - PUID=$PUID
-      - PGID=$PGID
+      - PGID=env
       - TZ=$TZ
       volumes:
-      - $conf/radarr:/config
-      - $media:/media
+      - $path/radarr:/config
+      - media:/media
       ports:
       - 7878:7878
       restart: unless-stopped
+
+    radarr-2:
+      image: linuxserver/radarr:latest
+      container_name: radarr-2
+      environment:
+      - PUID=$PUID
+      - PGID=env
+      - TZ=$TZ
+      volumes:
+      - $path/radarr-2:/config
+      - media:/media
+      ports:
+      - 7070:7878
+      restart: unless-stopped
+      
+#For nfs share 
+volumes:
+  media:
+    external: true

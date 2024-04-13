@@ -1,5 +1,5 @@
-version: "2"
 services:
+
     jellyseerr:
       image: fallenbagel/jellyseerr:latest
       container_name: jellyseerr
@@ -9,8 +9,12 @@ services:
       - LOG_LEVEL=debug
       - TZ=$TZ
       volumes:
-      - $conf/jellyseer:/app/config
+      - $path/jellyseer:/app/config
       ports:
       - 5055:5055
       restart: unless-stopped
 
+#For nfs share 
+volumes:
+  media:
+    external: true

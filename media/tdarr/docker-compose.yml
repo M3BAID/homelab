@@ -37,3 +37,8 @@ tdarr:
       #For Intel QSV
       devices:
       - /dev/dri:/dev/dri
+
+#For nfs share 
+volumes:
+  media:
+    external: true
