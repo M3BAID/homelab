@@ -9,7 +9,7 @@ services:
       ports:
       - 9696:9696
       volumes:
-      - $path/prowlarr:/app/config
+      - $path/prowlarr:/config
       restart: unless-stopped
 
 #For nfs share 
