@@ -1,18 +1,22 @@
 services:
     jellyfin:
       image: lscr.io/linuxserver/jellyfin:latest
+      networks:
+      - media
       container_name: jellyfin
       environment:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
       - JELLYFIN_PublishedServerUrl=jellyfin.example.com
-      - linuxserver/mods:jellyfin-opencl-intel
+      #For Intel GPU
+      #- linuxserver/mods:jellyfin-opencl-intel
       #For Nvidia GPU
       #- NVIDIA_VISIBLE_DEVICES=all
       volumes:
       - $path/jellyfin:/config
       - media:/media
+      - public:/public
       ports:
       - 8096:8096
 
@@ -24,7 +28,18 @@ services:
 
       restart: unless-stopped
 
-#For nfs share 
+networks:
+  media:
+
+#For nfs share  
 volumes:
   media:
-    external: true
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/media"
+  public:
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/public"

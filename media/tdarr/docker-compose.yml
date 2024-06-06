@@ -2,7 +2,9 @@ tdarr:
       container_name: tdarr
       image: ghcr.io/haveagitgat/tdarr:latest
       restart: unless-stopped
-      network_mode: bridge
+      #network_mode: bridge
+      networks:
+      - media
       ports:
       - 8265:8265 # webUI port
       - 8266:8266 # server port
@@ -17,28 +19,40 @@ tdarr:
       - internalNode=true
       - inContainer=true
       #For Intel QSV
-      - ffmpegVersion=6
+      #- ffmpegVersion=6
       
       - nodeName=MainNode
       # For NVIDIA_GraphicsCards
-      - NVIDIA_DRIVER_CAPABILITIES=all
-      - NVIDIA_VISIBLE_DEVICES=all
+      #- NVIDIA_DRIVER_CAPABILITIES=all
+      #- NVIDIA_VISIBLE_DEVICES=all
       
       volumes:
       - $path/tdarr/server:/app/server
       - $path/tdarr/configs:/app/configs
       - $path/tdarr/logs:/app/logs
       - $path/tdarr/transcode_cache:/temp
-      - $media:/media
+      - media:/media
+      - public:/public
       
       # For NVIDIA_GraphicsCards
       #runtime: nvidia
       
       #For Intel QSV
-      devices:
-      - /dev/dri:/dev/dri
+      #devices:
+      #- /dev/dri:/dev/dri
 
-#For nfs share 
+networks:
+  media:
+
+#For nfs share  
 volumes:
   media:
-    external: true
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/media"
+  public:
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/public"

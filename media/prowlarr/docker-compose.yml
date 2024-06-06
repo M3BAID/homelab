@@ -1,7 +1,9 @@
 services:
     prowlarr:
-      container_name: prowlarr
       image: lscr.io/linuxserver/prowlarr:latest
+      networks:
+      - media
+      container_name: prowlarr
       environment:
       - PUID=$PUID
       - PGID=$PGID
@@ -12,7 +14,5 @@ services:
       - $path/prowlarr:/config
       restart: unless-stopped
 
-#For nfs share 
-volumes:
+networks:
   media:
-    external: true

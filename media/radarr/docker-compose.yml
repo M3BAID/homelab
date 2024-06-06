@@ -1,6 +1,8 @@
 services:
     radarr:
       image: linuxserver/radarr
+      networks:
+      - media
       container_name: radarr
       environment:
       - PUID=$PUID
@@ -13,21 +15,34 @@ services:
       - 7878:7878
       restart: unless-stopped
 
-    radarr-2:
+    radarr-public:
       image: linuxserver/radarr:latest
-      container_name: radarr-2
+      networks:
+      - media
+      container_name: radarr-public
       environment:
       - PUID=$PUID
       - PGID=env
       - TZ=$TZ
       volumes:
-      - $path/radarr-2:/config
-      - media:/media
+      - $path/radarr-public:/config
+      - public:/public
       ports:
       - 7070:7878
       restart: unless-stopped
       
-#For nfs share 
+networks:
+  media:
+
+#For nfs share  
 volumes:
   media:
-    external: true
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/media"
+  public:
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/public"

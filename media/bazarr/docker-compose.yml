@@ -1,6 +1,8 @@
 services:
     bazarr:
       image: lscr.io/linuxserver/bazarr:latest
+      networks:
+      - media
       container_name: bazarr
       environment:
       - PUID=$PUID
@@ -13,21 +15,33 @@ services:
       - 6767:6767
       restart: unless-stopped
 
-    bazarr-2:
+    bazarr-public:
       image: linuxserver/bazarr:latest
-      container_name: bazarr-1
+      networks:
+      - media
+      container_name: bazarr-public
       environment:
       - PUID=$PUID
       - PGID=env
       - TZ=$TZ
       volumes:
-      - $path/bazarr-2:/config
-      - media:/media
+      - $path/bazarr-public:/config
+      - public:/public
       ports:
       - 6060:6767
       restart: unless-stopped
 
-#For nfs share 
+networks:
+  media:
+  
 volumes:
   media:
-    external: true
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/media"
+  public:
+    driver_opts:
+      type: "nfs"
+      o: "addr=ip,nolock,rw,soft,nfsvers=4"
+      device: ":nfs-path/public"
