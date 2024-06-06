@@ -16,8 +16,6 @@ services:
 
     sonarr-public:
       image: linuxserver/sonarr:develop
-      networks:
-      - media
       container_name: sonarr-public
       environment:
       - PUID=$PUID

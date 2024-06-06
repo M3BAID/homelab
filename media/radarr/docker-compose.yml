@@ -15,8 +15,6 @@ services:
 
     radarr-public:
       image: linuxserver/radarr:latest
-      networks:
-      - media
       container_name: radarr-public
       environment:
       - PUID=$PUID

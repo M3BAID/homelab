@@ -15,8 +15,6 @@ services:
 
     bazarr-public:
       image: linuxserver/bazarr:latest
-      networks:
-      - media
       container_name: bazarr-public
       environment:
       - PUID=$PUID
