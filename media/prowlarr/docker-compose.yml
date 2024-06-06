@@ -1,8 +1,6 @@
 services:
     prowlarr:
       image: lscr.io/linuxserver/prowlarr:latest
-      networks:
-      - media
       container_name: prowlarr
       environment:
       - PUID=$PUID
@@ -13,6 +11,3 @@ services:
       volumes:
       - $path/prowlarr:/config
       restart: unless-stopped
-
-networks:
-  media:

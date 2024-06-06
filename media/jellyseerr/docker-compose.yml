@@ -1,8 +1,6 @@
 services:
     jellyseerr:
       image: fallenbagel/jellyseerr:latest
-      networks:
-      - media
       container_name: jellyseerr
       environment:
       - PUID=$PUID
@@ -14,6 +12,3 @@ services:
       ports:
       - 5055:5055
       restart: unless-stopped
-
-networks:
-  media:

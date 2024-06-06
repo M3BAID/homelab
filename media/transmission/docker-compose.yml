@@ -1,8 +1,6 @@
 services:
     transmission:
       image: lscr.io/linuxserver/transmission:latest
-      networks:
-      - media
       container_name: transmission
       environment:
       - PUID=$PUID
@@ -18,18 +16,16 @@ services:
       - 51413:51413/udp
       restart: unless-stopped
 
-networks:
-  media:
 
 #For nfs share  
 volumes:
   media:
     driver_opts:
       type: "nfs"
-      o: "addr=ip,nolock,rw,soft,nfsvers=4"
-      device: ":nfs-path/media"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path/media"
   public:
     driver_opts:
       type: "nfs"
-      o: "addr=ip,nolock,rw,soft,nfsvers=4"
-      device: ":nfs-path/public"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path/public"

@@ -2,9 +2,7 @@ tdarr:
       container_name: tdarr
       image: ghcr.io/haveagitgat/tdarr:latest
       restart: unless-stopped
-      #network_mode: bridge
-      networks:
-      - media
+      network_mode: bridge
       ports:
       - 8265:8265 # webUI port
       - 8266:8266 # server port
@@ -41,18 +39,15 @@ tdarr:
       #devices:
       #- /dev/dri:/dev/dri
 
-networks:
-  media:
-
-#For nfs share  
+#For nfs share   
 volumes:
   media:
     driver_opts:
       type: "nfs"
-      o: "addr=ip,nolock,rw,soft,nfsvers=4"
-      device: ":nfs-path/media"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path/media"
   public:
     driver_opts:
       type: "nfs"
-      o: "addr=ip,nolock,rw,soft,nfsvers=4"
-      device: ":nfs-path/public"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path/public"

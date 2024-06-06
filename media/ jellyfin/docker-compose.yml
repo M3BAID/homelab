@@ -1,8 +1,6 @@
 services:
     jellyfin:
       image: lscr.io/linuxserver/jellyfin:latest
-      networks:
-      - media
       container_name: jellyfin
       environment:
       - PUID=$PUID
@@ -28,18 +26,15 @@ services:
 
       restart: unless-stopped
 
-networks:
-  media:
-
 #For nfs share  
 volumes:
   media:
     driver_opts:
       type: "nfs"
-      o: "addr=ip,nolock,rw,soft,nfsvers=4"
-      device: ":nfs-path/media"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path/media"
   public:
     driver_opts:
       type: "nfs"
-      o: "addr=ip,nolock,rw,soft,nfsvers=4"
-      device: ":nfs-path/public"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path/public"
