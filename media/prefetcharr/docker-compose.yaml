@@ -26,6 +26,7 @@ services:
       - REMAINING_EPISODES=2
     volumes:
       - /path/to/log/dir:/log
+    restart: unless-stopped
 
 networks:
   m3tv:

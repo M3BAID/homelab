@@ -1,0 +1,38 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    networks:
+      - m3tv
+    container_name: qbittorrent
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=TZ
+      - WEBUI_PORT=8085
+      - TORRENTING_PORT=6881
+    #networks:
+      #- meteor_tv
+    volumes:
+      - $path/qbittorrent/config:/config
+      - $path/qbittorrent/theme:/theme
+      - downloads:/downloads
+    ports:
+      - 8085:8085
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+networks:
+  m3tv:
+    external: true
+    
+volumes:
+  downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":PATH"
+      
+#networks:
+  #meteor_tv:
+    #external: true

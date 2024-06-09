@@ -1,6 +1,8 @@
 services:
     bazarr:
       image: lscr.io/linuxserver/bazarr:latest
+      networks:
+      - m3tv
       container_name: bazarr
       environment:
       - PUID=$PUID
@@ -15,6 +17,8 @@ services:
 
     bazarr-public:
       image: linuxserver/bazarr:latest
+      networks:
+      - m3tv
       container_name: bazarr-public
       environment:
       - PUID=$PUID
@@ -27,15 +31,19 @@ services:
       - 6060:6767
       restart: unless-stopped
 
+networks:
+  m3tv:
+    external: true
+      
 #For nfs share  
 volumes:
   media:
     driver_opts:
       type: "nfs"
       o: "addr=IP,nolock,rw,soft,nfsvers=4"
-      device: ":path/media"
+      device: ":PATH"
   public:
     driver_opts:
       type: "nfs"
       o: "addr=IP,nolock,rw,soft,nfsvers=4"
-      device: ":path/public"
+      device: ":PATH"

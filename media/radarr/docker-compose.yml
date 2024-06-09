@@ -1,6 +1,8 @@
 services:
     radarr:
       image: linuxserver/radarr
+      networks:
+      - m3tv
       container_name: radarr
       environment:
       - PUID=$PUID
@@ -9,12 +11,15 @@ services:
       volumes:
       - $path/radarr:/config
       - media:/media
+      - downloads:/downloads
       ports:
       - 7878:7878
       restart: unless-stopped
 
     radarr-public:
       image: linuxserver/radarr:latest
+      networks:
+      - m3tv
       container_name: radarr-public
       environment:
       - PUID=$PUID
@@ -23,9 +28,14 @@ services:
       volumes:
       - $path/radarr-public:/config
       - public:/public
+      - downloads:/downloads
       ports:
       - 7070:7878
       restart: unless-stopped
+
+networks:
+  m3tv:
+    external: true
       
 #For nfs share  
 volumes:
@@ -33,9 +43,14 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=IP,nolock,rw,soft,nfsvers=4"
-      device: ":path/media"
+      device: ":path"
   public:
     driver_opts:
       type: "nfs"
       o: "addr=IP,nolock,rw,soft,nfsvers=4"
-      device: ":path/public"
+      device: ":path"
+  downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=IP,nolock,rw,soft,nfsvers=4"
+      device: ":path"

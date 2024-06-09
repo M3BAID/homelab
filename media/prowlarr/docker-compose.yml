@@ -1,6 +1,8 @@
 services:
     prowlarr:
       image: lscr.io/linuxserver/prowlarr:latest
+      networks:
+      - m3tv
       container_name: prowlarr
       environment:
       - PUID=$PUID
@@ -11,3 +13,7 @@ services:
       volumes:
       - $path/prowlarr:/config
       restart: unless-stopped
+
+networks:
+  m3tv:
+    external: true

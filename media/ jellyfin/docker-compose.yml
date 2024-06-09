@@ -1,6 +1,8 @@
 services:
     jellyfin:
       image: lscr.io/linuxserver/jellyfin:latest
+      networks:
+      - m3tv
       container_name: jellyfin
       environment:
       - PUID=$PUID
@@ -26,15 +28,19 @@ services:
 
       restart: unless-stopped
 
+networks:
+  m3tv:
+    external: true
+      
 #For nfs share  
 volumes:
   media:
     driver_opts:
       type: "nfs"
       o: "addr=IP,nolock,rw,soft,nfsvers=4"
-      device: ":path/media"
+      device: ":PATH"
   public:
     driver_opts:
       type: "nfs"
       o: "addr=IP,nolock,rw,soft,nfsvers=4"
-      device: ":path/public"
+      device: ":PATH"
