@@ -6,6 +6,7 @@ services:
         volumes:
             - '$path/homarr/configs:/app/data/configs'
             - '$path/homarr/icons:/app/public/icons'
+            -  '/var/run/docker.sock:/var/run/docker.sock'
         ports:
             - '7575:7575'
         restart: unless-stopped
