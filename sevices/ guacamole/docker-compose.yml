@@ -3,6 +3,8 @@ services:
   guacamole:
     image: oznu/guacamole
     container_name: guacamole
+    networks:
+      - guacnetwork
     volumes:
       - $path/guacamole:/config
     ports:
@@ -10,3 +12,10 @@ services:
 volumes:
   postgres:
     driver: local
+
+networks:
+  guacnetwork:
+    driver: bridge
+
+#Default Username == "guacadmin"
+#Default Password == "guacadmin"
