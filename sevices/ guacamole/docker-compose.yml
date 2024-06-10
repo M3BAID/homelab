@@ -1,21 +1,15 @@
-version: "2"
+version: "3.1"
 services:
   guacamole:
-    image: oznu/guacamole
+    image: flcontainers/guacamole
     container_name: guacamole
-    networks:
-      - guacnetwork
+    environment:
+      TZ: $TZ
     volumes:
       - $path/guacamole:/config
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 8182:8080
-volumes:
-  postgres:
-    driver: local
-
-networks:
-  guacnetwork:
-    driver: bridge
 
 #Default Username == "guacadmin"
-#Default Password == "guacadmin"
+#Default Username == "guacadmin"
