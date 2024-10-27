@@ -1,6 +1,6 @@
 services:
     bazarr:
-      image: lscr.io/linuxserver/bazarr:latest
+      image: linuxserver/bazarr:latest
       networks:
       - m3tv
       container_name: bazarr
@@ -10,7 +10,7 @@ services:
       - TZ=$TZ
       volumes:
       - $path/bazarr:/config
-      - media:/media
+      - media:/media:nocopy
       ports:
       - 6767:6767
       restart: unless-stopped
@@ -26,11 +26,14 @@ services:
       - TZ=$TZ
       volumes:
       - $path/bazarr-public:/config
-      - public:/public
+      - public:/public:nocopy
       ports:
       - 6060:6767
       restart: unless-stopped
 
+#networks:
+  #m3tv:
+    #name: m3tv
 networks:
   m3tv:
     external: true

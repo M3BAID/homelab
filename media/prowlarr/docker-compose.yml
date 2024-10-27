@@ -1,19 +1,20 @@
 services:
     prowlarr:
       image: lscr.io/linuxserver/prowlarr:latest
-      networks:
-      - m3tv
+      #networks:
+      #- m3tv
+      network_mode: container:gluetun-gluetun-1
       container_name: prowlarr
       environment:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
-      ports:
-      - 9696:9696
+      #ports:
+      #- 9696:9696
       volumes:
       - $path/prowlarr:/config
       restart: unless-stopped
 
-networks:
-  m3tv:
-    external: true
+#networks:
+  #m3tv:
+    #external: true

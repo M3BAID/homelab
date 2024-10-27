@@ -1,28 +1,27 @@
 services:
     jellyfin:
       image: lscr.io/linuxserver/jellyfin:latest
-      networks:
-      - m3tv
       container_name: jellyfin
       environment:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
       - JELLYFIN_PublishedServerUrl=jellyfin.example.com
+      - DOCKER_MODS=ghcr.io/jumoog/intro-skipper
       #For Intel GPU
-      #- linuxserver/mods:jellyfin-opencl-intel
+      - linuxserver/mods:jellyfin-opencl-intel
       #For Nvidia GPU
       #- NVIDIA_VISIBLE_DEVICES=all
       volumes:
       - $path/jellyfin:/config
-      - media:/media
-      - public:/public
+      - media:/media:nocopy
+      - public:/public:nocopy
       ports:
       - 8096:8096
 
       #For Intel GPU
-      #devices:
-      #- /dev/dri:/dev/dri
+      devices:
+      - /dev/dri:/dev/dri
       #For Nvidia GPU
       #runtime: nvidia
 

@@ -1,0 +1,27 @@
+version: "3"
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    networks:
+      - m3tv
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 9696:9696 # Prowlarr
+      - 8085:8085 # QB
+      - 6881:6881 # QB
+      - 6881:6881/udp # QB
+
+    volumes:
+      - $path/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=private internet access
+      - OPENVPN_USER=$user
+      - OPENVPN_PASSWORD=$pass
+      - SERVER_REGIONS=$region
+
+networks:
+  m3tv:
+    name: m3tv

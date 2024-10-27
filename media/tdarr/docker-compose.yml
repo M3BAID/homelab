@@ -19,10 +19,10 @@ services:
       - webUIPort=8265
       - internalNode=true
       - inContainer=true
-      #For Intel QSV
-      #- ffmpegVersion=6
-      
       - nodeName=MainNode
+      #For Intel QSV
+      - ffmpegVersion=6
+      
       # For NVIDIA_GraphicsCards
       #- NVIDIA_DRIVER_CAPABILITIES=all
       #- NVIDIA_VISIBLE_DEVICES=all
@@ -32,15 +32,15 @@ services:
       - $path/tdarr/configs:/app/configs
       - $path/tdarr/logs:/app/logs
       - $path/tdarr/transcode_cache:/temp
-      - media:/media
-      - public:/public
+      - media:/media:nocopy
+      - public:/public:nocopy
       
       # For NVIDIA_GraphicsCards
       #runtime: nvidia
       
       #For Intel QSV
-      #devices:
-      #- /dev/dri:/dev/dri
+      devices:
+      - /dev/dri:/dev/dri
 
 networks:
   m3tv:

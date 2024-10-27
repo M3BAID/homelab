@@ -11,8 +11,8 @@ services:
       - UMASK_SET=022
       volumes:
       - $path/sonarr:/config
-      - media:/media
-      - downloads:/downloads
+      - media:/media:nocopy
+      - downloads:/downloads:nocopy
       ports:
       - 8989:8989
       restart: unless-stopped
@@ -29,8 +29,8 @@ services:
       - UMASK_SET=022
       volumes:
       - $path/sonarr-public:/config
-      - public:/public
-      - downloads:/downloads
+      - public:/public:nocopy
+      - downloads:/downloads:nocopy
       ports:
       - 8080:8989
       restart: unless-stopped
